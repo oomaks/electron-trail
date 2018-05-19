@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1" />
+    <title>SubWindow</title>
+    <style>
+      html, body, .head{
+        padding:0;
+        margin:0;
+      }
+      html{
+        width:99.5%;
+        height:99%;    
+        border:1px solid black;
+      }
+      .head{
+        width:100%;
+        height:60px;
+        -webkit-app-region: drag;
+        background:blue;
+      }
+      .close{
+        color:white;
+        font-size:30px;
+        font-style:bold;
+        float:right;
+        margin-right:20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        -webkit-app-region: no-drag;
+      }
+      .close:hover{
+        color:red;
+        transform:rotate(70deg);
+        -ms-transform:rotate(70deg); 	/* IE 9 */
+        -moz-transform:rotate(70deg); 	/* Firefox */
+        -webkit-transform:rotate(70deg); /* Safari 和 Chrome */
+        -o-transform:rotate(70deg); 	/* Opera */
+      }
+    </style>
+    <script>
+        function feedback(){
+          const {URL} = require('url');
+          const {ipcRenderer} = require('electron');
+          let mURL = new URL(location.href);
+          let identity = mURL.searchParams.get('identity');
+          ipcRenderer.send('update-sub-win', [identity, 'close']);
+        }
+
+        function feedback2(){
+          const {URL} = require('url');
+          const {ipcRenderer} = require('electron');
+          let mURL = new URL(location.href);
+          let identity = mURL.searchParams.get('identity');
+          ipcRenderer.send('update-sub-win', ['main', 'pong']);
+        }
+    </script>
+  </head>
+  <body>
+    <div class="head">
+      <span class="close" onclick=javascript:feedback()>&times;</span>
+    </div>
+    <h1>子窗口</h1>
+    sssssssssssssssssssssssssssssssss<br/>
+    <button type="button" onclick=javascript:feedback2()>反馈</button>
+  </body>
+</html>

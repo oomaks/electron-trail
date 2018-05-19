@@ -5,10 +5,21 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
+    基于 Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
+
+    <h3 id="msg" style="color:red;"></h3>
+
+    <h5>带有头像、标题、内容、可以被点击的通知（只能在渲染进程使用）</h5>
+    <button id="btn_notification">测试</button>
+
+    <h5>弹出窗体</h5>
+    <button id="btn_win">测试</button>
+
+    <h5>托盘和托盘右键菜单</h5>
+    <button >测试</button>
+
+    <script src="./render.js"></script>
+</body>
 </html>
