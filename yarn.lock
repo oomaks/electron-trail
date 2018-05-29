@@ -2,36 +2,6 @@
 # yarn lockfile v1
 
 
-"@nodert-win10-au/windows.applicationmodel@^0.2.96":
-  version "0.2.96"
-  resolved "http://registry.npm.taobao.org/@nodert-win10-au/windows.applicationmodel/download/@nodert-win10-au/windows.applicationmodel-0.2.96.tgz#67a29c508abc997a59993d1e99901308e21299e9"
-  dependencies:
-    nan latest
-
-"@nodert-win10-au/windows.data.xml.dom@^0.2.96":
-  version "0.2.96"
-  resolved "http://registry.npm.taobao.org/@nodert-win10-au/windows.data.xml.dom/download/@nodert-win10-au/windows.data.xml.dom-0.2.96.tgz#9f5645330c2aa197df5f07a508f48d587a8b2e66"
-  dependencies:
-    nan latest
-
-"@nodert-win10-au/windows.foundation@^0.2.96":
-  version "0.2.96"
-  resolved "http://registry.npm.taobao.org/@nodert-win10-au/windows.foundation/download/@nodert-win10-au/windows.foundation-0.2.96.tgz#68c55c74b0c9855156e194da0abb9318c10a3d87"
-  dependencies:
-    nan latest
-
-"@nodert-win10-au/windows.ui.notifications@^0.2.96":
-  version "0.2.96"
-  resolved "http://registry.npm.taobao.org/@nodert-win10-au/windows.ui.notifications/download/@nodert-win10-au/windows.ui.notifications-0.2.96.tgz#e53d35a787efdfb8657a44d1dc916bb3c5ea6347"
-  dependencies:
-    nan latest
-
-"@nodert-win10-au/windows.ui.startscreen@^0.2.96":
-  version "0.2.96"
-  resolved "http://registry.npm.taobao.org/@nodert-win10-au/windows.ui.startscreen/download/@nodert-win10-au/windows.ui.startscreen-0.2.96.tgz#e25be59d80b8c9e0ed234f45a62ae3171c4cbd24"
-  dependencies:
-    nan latest
-
 "@types/node@^8.0.24":
   version "8.10.17"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.10.17.tgz#d48cf10f0dc6dcf59f827f5a3fc7a4a6004318d3"
@@ -169,7 +139,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-debug@2.6.9, debug@^2.1.3, debug@^2.2.0, debug@^2.5.1:
+debug@2.6.9, debug@^2.1.3, debug@^2.2.0:
   version "2.6.9"
   resolved "http://registry.npm.taobao.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -207,25 +177,9 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron-windows-notifications@^2.0.1:
+electron@2.0.1:
   version "2.0.1"
-  resolved "http://registry.npm.taobao.org/electron-windows-notifications/download/electron-windows-notifications-2.0.1.tgz#4d36970b8a42c01035a97baa0c1449699c03d9b7"
-  dependencies:
-    debug "^2.5.1"
-    is-electron-renderer "^2.0.1"
-    sanitize-xml-string "^1.1.0"
-    uuid "^3.0.0"
-    xml-escape "^1.1.0"
-  optionalDependencies:
-    "@nodert-win10-au/windows.applicationmodel" "^0.2.96"
-    "@nodert-win10-au/windows.data.xml.dom" "^0.2.96"
-    "@nodert-win10-au/windows.foundation" "^0.2.96"
-    "@nodert-win10-au/windows.ui.notifications" "^0.2.96"
-    "@nodert-win10-au/windows.ui.startscreen" "^0.2.96"
-
-electron@1.8.3:
-  version "1.8.3"
-  resolved "http://registry.npm.taobao.org/electron/download/electron-1.8.3.tgz#001416ea3a25ce594e317cb5531bc41eadd22f7f"
+  resolved "http://registry.npm.taobao.org/electron/download/electron-2.0.1.tgz#d9defcc187862143b9027378be78490eddbfabf4"
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
@@ -405,10 +359,6 @@ is-builtin-module@^1.0.0:
   dependencies:
     builtin-modules "^1.0.0"
 
-is-electron-renderer@^2.0.1:
-  version "2.0.1"
-  resolved "http://registry.npm.taobao.org/is-electron-renderer/download/is-electron-renderer-2.0.1.tgz#a469d056f975697c58c98c6023eb0aa79af895a2"
-
 is-finite@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/is-finite/download/is-finite-1.0.2.tgz#cc6677695602be550ef11e8b4aa6305342b6d0aa"
@@ -547,10 +497,6 @@ mkdirp@0.5.0:
 ms@2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
-
-nan@latest:
-  version "2.10.0"
-  resolved "http://registry.npm.taobao.org/nan/download/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
   version "2.4.0"
@@ -761,10 +707,6 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
 
-sanitize-xml-string@^1.1.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/sanitize-xml-string/download/sanitize-xml-string-1.1.0.tgz#dd86686069ce102b4954912d9c7982037b928768"
-
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.5.0"
   resolved "http://registry.npm.taobao.org/semver/download/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
@@ -911,7 +853,7 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/util-deprecate/download/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
-uuid@^3.0.0, uuid@^3.1.0:
+uuid@^3.1.0:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
@@ -933,10 +875,6 @@ verror@1.10.0:
 wrappy@1:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/wrappy/download/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
-
-xml-escape@^1.1.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/xml-escape/download/xml-escape-1.1.0.tgz#3904c143fa8eb3a0030ec646d2902a2f1b706c44"
 
 xtend@~2.1.1:
   version "2.1.2"

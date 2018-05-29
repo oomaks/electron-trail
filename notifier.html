@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1" />
+    <title>SubWindow</title>
+    <style>
+      html, body{
+        padding:0;
+        margin:0;
+      }
+      html{
+        width:99.5%;
+        height:98%;
+      }
+      .toast{
+        width:410px;
+        height:110px;
+        overflow: hidden;
+        display: flex;
+        background: #1d2935;
+        color:white;
+      }
+      .avatar-container img{
+        margin: 5px;
+        width:90px;
+        height: 90px;
+      }
+      .content{
+        padding:5px;
+        padding-left: 10px;
+        padding-top: 10px;
+      }
+      .title{
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .msg{
+        font-size: 14px;
+      }
+      ::-webkit-scrollbar
+      {
+        width: 0;
+        height: 0;
+      }
+    </style>
+    <script>
+        const {URL} = require('url');
+        const { ipcRenderer } = require('electron');
+        let mURL = new URL(location.href);
+        let identity = mURL.searchParams.get('identity');
+        let mParams;
+
+        function listener(event, params){
+          let titleDiv = document.getElementById('title');
+          let msgDiv = document.getElementById('msg');
+          titleDiv.innerHTML = params.title;
+          msgDiv.innerHTML = params.msg;
+          mParams = params;
+          ipcRenderer.send('update-sub-win', {identity: identity, ope: 'show'});
+        }
+
+        function feedback(){
+          let mURL = new URL(location.href);
+          let identity = mURL.searchParams.get('identity');
+          console.log(mParams);
+          ipcRenderer.send('update-sub-win', {identity: 'main'});
+          ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+        }
+
+        ipcRenderer.removeListener('sub-win-reply', listener);
+        ipcRenderer.on('sub-win-reply', listener);
+    </script>
+  </head>
+  <body>
+    <div data-id='123' id='toast' class='toast' onclick=javascript:feedback()>
+      <div class="avatar-container">
+        <img id ='avatar' src='avatar.png'/>
+      </div>
+      <div class="content">
+        <div id='title' class='title'>标题</div>
+        <div id='msg' class='msg'>这是一个消息</div>
+      </div>
+    </div>
+  </body>
+</html>

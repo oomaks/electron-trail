@@ -7,6 +7,11 @@ let tray;
 let subWins = new Map();
 let place;
 
+global.sharedObject = {
+    subWins: subWins
+};
+console.log('#########################');
+console.log(global.sharedObject.arg);
 function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600});
   mainWindow.loadURL(url.format({
@@ -14,6 +19,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
+  mainWindow.webContents.openDevTools()
   subWins.set('main', mainWindow);
   // mainWindow.webContents.openDevTools() // Open the DevTools.
 
@@ -28,54 +34,91 @@ function createWindow () {
 }
 
 function prapareSubWin(){
-    ipcMain.on('create-sub-win', function(event, args){
-        let identity = args[0];
-        let width = args[1];
-        let height = args[2];
-        let subWin = new BrowserWindow({
-            width: width,
-            height: height,
-            titleBarStyle: 'customButtonsOnHover', 
-            frame: false,
-            resizable: false,
-            modal: false
-        });
-        place = subWin;
-        subWin.loadURL(url.format({
-            pathname: path.join(__dirname, 'subwin.html'),
-            protocol: 'file:',
-            slashes: true,
-            search: '?identity=' + identity
-        }));
-        subWin.once('ready-to-show', () => {
-            subWin.show()
-        })
-        subWin.on('closed', function(){
-            subWin = null;
-            subWins.delete(identity);
-        });
-        subWins.set(identity, subWin);
+    ipcMain.on('create-sub-win', function(event, params){
+        createSubWin();
     });
 
-    ipcMain.on('update-sub-win', function(event, args){
-        let identity = args[0];
-        let ope = args[1];
+    ipcMain.on('update-sub-win', function(event, params){
+        let identity = params.identity || '';
+        let ope = params.ope || '';
+        let subWin;
         switch(ope){
             case 'close':
-               let subWin = subWins.get(identity);
+               subWin = subWins.get(identity);
                subWin.close();
                break;
+            case 'show':
+               subWin = subWins.get(identity);
+               
+                 subWin.show();
+              
+               break;
+            case 'hide':
+               subWin = subWins.get(identity);
+               
+                 subWin.hide();
+               
+               break;
+            case 'callback':
+               subWin = subWins.get(identity);
+               if (!subWin.isVisible()) {
+                 subWin.show();
+               }
+               break;
             default:
-               subWins.get(identity).webContents.send('sub-win-reply', args);
+               subWins.get(identity).webContents.send('sub-win-reply', params);
         }
     });
+}
+
+function createSubWin(params){
+    console.log(params);
+    let identity = params.identity;
+    let posX = params.x || '';
+    let posY = params.y || '';
+    let width = params.width || 400;
+    let height = params.height || 300;
+    let skipTaskbar = params.skipTaskbar !== undefined ? params.skipTaskbar : false;
+    let show = params.show !== undefined ? params.show : true;
+    let alwaysOnTop = params.alwaysOnTop !==undefined ? params.alwaysOnTop : false;
+
+    if(subWins.get(identity)){
+        subWins.get(identity).show();
+    }
+
+    let subWin = new BrowserWindow({
+        x: posX,
+        y: posY,
+        width: width,
+        height: height,
+        titleBarStyle: 'customButtonsOnHover', 
+        frame: false,
+        resizable: false,
+        modal: false,
+        skipTaskbar: skipTaskbar,
+        alwaysOnTop: alwaysOnTop,
+        show: show,
+    });
+    place = subWin;
+    subWin.loadURL(url.format({
+        pathname: path.join(__dirname, 'notifier.html'),
+        protocol: 'file:',
+        slashes: true,
+        search: '?identity=' + identity
+    }));
+    subWin.webContents.openDevTools()
+    subWin.on('closed', function(){
+        subWin = null;
+        subWins.delete(identity);
+    });
+    subWins.set(identity, subWin);
 }
 
 function createTray(){
     tray = new Tray(path.join(__dirname, 'neekle.ico'));
     const contextMenu = Menu.buildFromTemplate([
       {label: '菜单一', type: 'normal', click(){shell.openExternal('https://electronjs.org')}},
-      {label: '菜单二', type: 'normal'},
+      {label: global.sharedObject.arg, type: 'normal'},
       {type: 'separator'},
       {label: '退出', type: 'normal', role: 'quit'}
     ])
@@ -83,10 +126,28 @@ function createTray(){
     tray.setContextMenu(contextMenu)
 }
 
+function prepareNotifier() {
+    const { screen } = require('electron');
+    let {width, height} = screen.getPrimaryDisplay().workArea;
+    let posX = width - 410;
+    let posY = height - 110;
+    createSubWin({
+        identity: 'notifier',
+        x: posX,
+        y: posY,
+        width: 400,
+        height: 100,
+        skipTaskbar: true,
+        show: false,
+        alwaysOnTop: true
+    });
+}
+
 app.on('ready', function(){
     createWindow();
     createTray();
     prapareSubWin();
+    prepareNotifier();
 })
 
 app.on('window-all-closed', function () {

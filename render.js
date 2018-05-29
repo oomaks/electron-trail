@@ -1,5 +1,6 @@
 const path = require('path')
 const {ipcRenderer} = require('electron')
+const notifier =require('./notification')
 
 var msg = document.getElementById('msg');
 
@@ -17,14 +18,15 @@ btnNotification.addEventListener('click', function(){
     };
 });
 
-ipcRenderer.on('sub-win-reply', function(event, args){
-    msg.innerHTML = args[1];
-});
 let btnWin = document.getElementById('btn_win');  
 btnWin.addEventListener('click', function(){
     msg.innerHTML = '';
-    ipcRenderer.send('create-sub-win', ['second-main', 400, 300]);
+    notifier.notify({
+        title:'t1',
+        msg:'s',
+        click: function(){
+            console.log('dkk');
+        }
+    });
+    msg.innerHTML = 'msg'
 });
-
-
-
