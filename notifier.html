@@ -31,13 +31,24 @@
         padding-left: 10px;
         padding-top: 10px;
       }
+      .msg{
+        font-size: 14px;
+      }
+      .head{
+        display:flex;
+      }
       .title{
         font-size: 16px;
         font-weight: bold;
         margin-bottom: 10px;
       }
-      .msg{
-        font-size: 14px;
+      .close{
+        display: inline-block;
+        height: 30px;
+        width: 20px;
+        margin-left:255px;
+        font-size: 24px;
+        margin-top: -5px;
       }
       ::-webkit-scrollbar
       {
@@ -69,17 +80,24 @@
           ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
         }
 
+        function close(){
+          ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+        }
+
         ipcRenderer.removeListener('sub-win-reply', listener);
         ipcRenderer.on('sub-win-reply', listener);
     </script>
   </head>
   <body>
-    <div data-id='123' id='toast' class='toast' onclick=javascript:feedback()>
+    <div id='toast' class='toast' onclick=javascript:feedback()>
       <div class="avatar-container">
         <img id ='avatar' src='avatar.png'/>
       </div>
       <div class="content">
-        <div id='title' class='title'>标题</div>
+        <div class='head'>
+          <div id='title' class='title'>标题</div>
+          <div class='close' onclick=javascript:close()>&times;</div>
+        </div>
         <div id='msg' class='msg'>这是一个消息</div>
       </div>
     </div>

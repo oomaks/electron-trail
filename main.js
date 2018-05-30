@@ -49,14 +49,17 @@ function prapareSubWin(){
                break;
             case 'show':
                subWin = subWins.get(identity);
-               
+                if(!subWin.isVisible()) {
                  subWin.show();
+                }
               
                break;
             case 'hide':
                subWin = subWins.get(identity);
                
+               if(subWin.isVisible()) {
                  subWin.hide();
+               }
                
                break;
             case 'callback':
