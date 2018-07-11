@@ -1,6 +1,7 @@
 const path = require('path')
 const {ipcRenderer} = require('electron')
-const notifier =require('./notification')
+const KunLunNotification =require('./notification')
+const notifier = KunLunNotification.getInstance();
 
 var msg = document.getElementById('msg');
 

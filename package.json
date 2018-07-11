@@ -21,6 +21,6 @@
     "electron": "2.0.1"
   },
   "dependencies": {
-   
+    "uuid": "^3.3.2"
   }
 }

@@ -57,6 +57,7 @@
       }
     </style>
     <script>
+        const notifications = [];
         const {URL} = require('url');
         const { ipcRenderer } = require('electron');
         let mURL = new URL(location.href);
@@ -64,6 +65,7 @@
         let mParams;
 
         function listener(event, params){
+          notifications.push(params);
           let titleDiv = document.getElementById('title');
           let msgDiv = document.getElementById('msg');
           titleDiv.innerHTML = params.title;
@@ -73,16 +75,31 @@
         }
 
         function feedback(){
-          let mURL = new URL(location.href);
-          let identity = mURL.searchParams.get('identity');
           console.log(mParams);
-          ipcRenderer.send('update-sub-win', {identity: 'main'});
-          ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+          //mParams.click();
+          // ipcRenderer.send('update-sub-win', {identity: 'main'});
+          // ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
         }
 
         function close(){
-          ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+          while(true) {
+            notifications.pop();
+            if(notifications.length < 1){
+              ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+              break;
+            }
+
+            const notification = notifications[notifications.length - 1];
+            if(notification) {
+              let titleDiv = document.getElementById('title');
+              let msgDiv = document.getElementById('msg');
+              titleDiv.innerHTML = params.title;
+              msgDiv.innerHTML = params.msg;
+              mParams = params;
+              break;
+          }
         }
+      }
 
         ipcRenderer.removeListener('sub-win-reply', listener);
         ipcRenderer.on('sub-win-reply', listener);
