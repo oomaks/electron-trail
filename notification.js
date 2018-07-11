@@ -92,4 +92,9 @@ const FakeNotification = function(){
 };
 FakeNotification.prototype = new KunLunNotification();
 
+FakeNotification.prototype.notify = function(options){
+    this._param(options);
+    console.log('notify:', this.options);
+};
+
 module.exports = KunLunNotification;
