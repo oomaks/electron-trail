@@ -3,11 +3,11 @@ const {ipcRenderer} = require('electron')
 const KunLunNotification =require('./notification')
 const notifier = KunLunNotification.getInstance();
 
-var msg = document.getElementById('msg');
+var msgDiv = document.getElementById('msg');
 
 let btnNotification = document.getElementById('btn_notification');  
 btnNotification.addEventListener('click', function(){
-    msg.innerHTML = '';
+    msgDiv.innerHTML = '';
     let notification = new Notification("您有一条新的消息", { 
         dir: "auto",  
         lang: "zh-CN",   
@@ -15,20 +15,20 @@ btnNotification.addEventListener('click', function(){
         body: '你好啊！我是蚂蚁，我在测试桌面推送'     
     });
     notification.onclick = () => {
-        msg.innerHTML = '通知被点击';
+        msgDiv.innerHTML = '通知被点击';
     };
 });
 
 let btnWin = document.getElementById('btn_win');  
 btnWin.addEventListener('click', function(){
-    msg.innerHTML = '';
+    msgDiv.innerHTML = '';
     notifier.notify({
         title:'t1',
         msg:'s',
         group:'channel',
         click: function(){
             console.log('dkk');
+            msgDiv.innerHTML = 'dkk'
         }
     });
-    msg.innerHTML = 'msg'
 });
