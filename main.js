@@ -69,7 +69,6 @@ function prapareSubWin(){
                }
                break;
             default:
-               console.log(params);
                subWins.get(identity).webContents.send('sub-win-reply', params);
         }
     });

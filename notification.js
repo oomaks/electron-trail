@@ -30,6 +30,7 @@ module.exports = notifier; */
 const uuidv4 = require('uuid/v4');
 
 const KunLunNotification = function(){};
+KunLunNotification.notifications = ['a'];
 
 KunLunNotification.getInstance = function(){
     try {
@@ -63,21 +64,22 @@ KunLunNotification.prototype._param = function(options) {
 
 const RendererNotification = function(){
     KunLunNotification.apply(this);
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.removeListener('sub-win-reply', this._listener);
-    ipcRenderer.on('sub-win-reply', this._listener);
+    // const { ipcRenderer } = require('electron');
+    // ipcRenderer.removeListener('sub-win-reply', this._listener);
+    // ipcRenderer.on('sub-win-reply', this._listener);
 };
 RendererNotification.prototype = new KunLunNotification();
 
-RendererNotification.prototype._listener = function(event, params){
-    params.click = params.click || function(){};
-    params.click(params);
-};
+// RendererNotification.prototype._listener = function(event, params){
+//     params.click = params.click || function(){};
+//     params.click(params);
+// };
 
 RendererNotification.prototype.notify = function(options){
-    this._param(options);
-    console.log(options);
     const { ipcRenderer } = require('electron');
+
+    this._param(options);
+    KunLunNotification.notifications.push(this.options);
     ipcRenderer.send('update-sub-win', this.options);
 };
 

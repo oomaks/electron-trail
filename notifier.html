@@ -65,20 +65,48 @@
         let mParams;
 
         function listener(event, params){
-          notifications.push(params);
           let titleDiv = document.getElementById('title');
           let msgDiv = document.getElementById('msg');
           titleDiv.innerHTML = params.title;
           msgDiv.innerHTML = params.msg;
           mParams = params;
+          let idx = 0;
+          for (let item of notifications) {
+            if(item.id === mParams.id || item.group === mParams.group) notifications.splice(idx, 1);
+            idx++;
+          }
+          notifications.push(params);
           ipcRenderer.send('update-sub-win', {identity: identity, ope: 'show'});
         }
 
         function feedback(){
-          console.log(mParams);
-          //mParams.click();
-          // ipcRenderer.send('update-sub-win', {identity: 'main'});
-          // ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+          notifications.pop();
+          ipcRenderer.send('update-sub-win', {identity: 'main', id: mParams.id});
+
+          let idx = 0;
+          for (let item of notifications) {
+            if(item.id === mParams.id || item.group === mParams.group) notifications.splice(idx, 1);
+            idx++;
+          }
+
+          while(true) {
+            if(notifications.length < 1){
+              ipcRenderer.send('update-sub-win', {identity: identity, ope: 'hide'});
+              break;
+            }
+
+            const notification = notifications[notifications.length - 1];
+            if(notification) {
+              let titleDiv = document.getElementById('title');
+              let msgDiv = document.getElementById('msg');
+              titleDiv.innerHTML = notification.title;
+              msgDiv.innerHTML = notification.msg;
+              mParams = notification;
+              break;
+            } else {
+              notifications.pop();
+            }
+          }
         }
 
         function close(){
@@ -93,9 +121,9 @@
             if(notification) {
               let titleDiv = document.getElementById('title');
               let msgDiv = document.getElementById('msg');
-              titleDiv.innerHTML = params.title;
-              msgDiv.innerHTML = params.msg;
-              mParams = params;
+              titleDiv.innerHTML = notification.title;
+              msgDiv.innerHTML = notification.msg;
+              mParams = notification;
               break;
           }
         }

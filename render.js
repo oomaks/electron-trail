@@ -25,6 +25,7 @@ btnWin.addEventListener('click', function(){
     notifier.notify({
         title:'t1',
         msg:'s',
+        group:'channel',
         click: function(){
             console.log('dkk');
         }
